@@ -14,88 +14,127 @@ namespace DapperProjectBlog
             using (var connection = new SqlConnection(CONNECTION_STRING))
             {
                 ReadUsers(connection);
-                ReadRoles(connection);
+                //ReadRoles(connection);
+                //DeleteUser(connection);
+                //CreateUser(connection);
+                //UpdateUser(connection);
+                //ReadUsers(connection);
             }
         }
 
         // USER
         static void ReadUsers(SqlConnection connection)
         {
-            var repository = new UserRepository(connection);
+            var repository = new Repository<User>(connection);
             var users = repository.Get();
 
             foreach (var user in users)
-                Console.WriteLine(user.Name);
-        }
-
-        static void ReadUser()
-        {
-            using (var connection = new SqlConnection(CONNECTION_STRING))
             {
-                var user = connection.Get<User>(1);
-
                 Console.WriteLine(user.Name);
+                foreach(var role in user.Roles)
+                    Console.WriteLine($" - {role.Name}");
             }
         }
 
-        static void CreateUser()
+        static void ReadUser(SqlConnection connection, int id)
+        {
+            var repository = new Repository<User>(connection);
+            var user = repository.Get(id);
+            Console.WriteLine(user.Name);
+        }
+
+        static void CreateUser(SqlConnection connection)
         {
             var user = new User()
             {
                 // O id já é gerado;
-                Bio = "Estudante de Tecnologia",
-                Email = "igor@email.com",
+                Bio = "Desenvolvedor Backend Junior",
+                Email = "caio@email.com",
                 Image = "https://",
-                Name = "Igor",
-                PasswordHash = "HASH",
-                Slug = "agmigor"
+                Name = "Caio",
+                PasswordHash = "9191",
+                Slug = "agmcaio"
             };
 
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                connection.Insert<User>(user);
-                Console.WriteLine("Cadastro realizado!");
-            }
+            var repository = new Repository<User>(connection);
+            repository.Insert(user);
+            Console.WriteLine("Cadastro realizado!");
         }
    
-        static void UpdateUser()
+        static void UpdateUser(SqlConnection connection, int id)
         {
             var user = new User()
             {
-                Id = 2,
-                Bio = "Desenvolvedor",
-                Email = "igor@email.com",
+                Id = id,
+                Bio = "Desenvolvedor Backend Junior",
+                Email = "caio@email.com",
                 Image = "https://",
-                Name = "Igor",
-                PasswordHash = "HASH",
-                Slug = "agmigor"
+                Name = "Caio Guilherme",
+                PasswordHash = "9191",
+                Slug = "agmcaio"
             };
 
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                connection.Update<User>(user);
-                Console.WriteLine("Atualização Realizada!");
-            }
+            var repository = new Repository<User>(connection);
+            repository.Update(user);
+            Console.WriteLine("Atualização Realizada!");
         }
     
-        static void DeleteUser()
+        static void DeleteUser(SqlConnection connection, int id)
         {
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                var user = connection.Get<User>(2); // Obtendo o usuário
-                connection.Delete<User>(user); // Apagando usuário
-                Console.WriteLine("Remoção Realizada!");
-            }
+            var repository = new Repository<User>(connection);
+            repository.Delete(id);
+            Console.WriteLine("Remoção Realizada!");
         }
 
         // ROLE
         static void ReadRoles(SqlConnection connection)
         {
-            var repository = new RoleRepository(connection);
+            var repository = new Repository<Role>(connection);
             var roles = repository.Get();
 
             foreach (var role in roles)
                 Console.WriteLine(role.Name);
+        }
+
+        static void ReadRole(SqlConnection connection, int id)
+        {
+            var repository = new Repository<Role>(connection);
+            var role = repository.Get(id);
+            Console.WriteLine($"{role.Name} - {role.Slug}");
+        }
+
+        static void CreateRole(SqlConnection connection)
+        {
+            var role = new Role()
+            {
+                Name = "Leitor",
+                Slug = "leitor"
+            };
+
+            var repository = new Repository<Role>(connection);
+            repository.Insert(role);
+            Console.WriteLine("Cadastro Realizado!");
+        }
+    
+        static void UpdateRole(SqlConnection connection, int id)
+        {
+            var role = new Role()
+            {
+                Id = id,
+                Name = "Name",
+                Slug = "Slug"
+            };
+
+            var repository = new Repository<Role>(connection);
+            repository.Update(role);
+            Console.WriteLine("Atualização realizada!");
+        }
+
+        static void DeleteRole(SqlConnection connection, int id)
+        {
+            var repository = new Repository<Role>(connection);
+            repository.Delete(id);
+            Console.WriteLine("Cadastro Removido!");
         }
     }
 
