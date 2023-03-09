@@ -7,26 +7,19 @@ namespace DapperProjectBlog.Repositories
 {
     public class Repository<TModel> where TModel : class
     {
-        private readonly SqlConnection _connection;
-
-        public Repository(SqlConnection connection)
-        {
-            _connection = connection;  
-        }
-
         public IEnumerable<TModel> Get()
         {
-            return _connection.GetAll<TModel>();
+            return Database.Connection.GetAll<TModel>();
         }
 
         public TModel Get(int id)
         {
-            return _connection.Get<TModel>(id);
+            return Database.Connection.Get<TModel>(id);
         }
 
         public void Insert(TModel model)
         {
-            _connection.Insert<TModel>(model);
+            Database.Connection.Insert<TModel>(model);
         }
 
         public void Update(TModel model)
@@ -35,7 +28,7 @@ namespace DapperProjectBlog.Repositories
             int id = (int)idProperty.GetValue(model);
 
             if(id != 0)
-                _connection.Update<TModel>(model);
+                Database.Connection.Update<TModel>(model);
         }
 
         public void Delete(TModel model)
@@ -45,14 +38,14 @@ namespace DapperProjectBlog.Repositories
 
             if (id != 0)
             {
-                _connection.Delete<TModel>(model);
+                Database.Connection.Delete<TModel>(model);
             }
         }
 
         public void Delete(int id)
         {
-            var role = _connection.Get<TModel>(id);
-            _connection.Delete<TModel>(role);
+            var role = Database.Connection.Get<TModel>(id);
+            Database.Connection.Delete<TModel>(role);
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Dapper.Contrib.Extensions;
 using DapperProjectBlog.Models;
 using DapperProjectBlog.Repositories;
+using DapperProjectBlog.Screens;
+using DapperProjectBlog.Screens.UserScreen;
+using DapperProjectBlog.Screens.UserScreens;
 using Microsoft.Data.SqlClient;
 
 namespace DapperProjectBlog
@@ -11,17 +14,13 @@ namespace DapperProjectBlog
 
         static void Main(string[] args)
         {
-            using (var connection = new SqlConnection(CONNECTION_STRING))
+            using (Database.Connection = new SqlConnection(CONNECTION_STRING))
             {
-                ReadUsers(connection);
-                //ReadRoles(connection);
-                //DeleteUser(connection);
-                //CreateUser(connection);
-                //UpdateUser(connection);
-                //ReadUsers(connection);
+                MenuScreen.Load();
             }
         }
 
+        /*
         // USER
         static void ReadUsers(SqlConnection connection)
         {
@@ -31,7 +30,18 @@ namespace DapperProjectBlog
             foreach (var user in users)
             {
                 Console.WriteLine(user.Name);
-                foreach(var role in user.Roles)
+            }
+        }
+
+        static void ReadUsersWithRoles(SqlConnection connection)
+        {
+            var repository = new UserRepository(connection);
+            var users = repository.GetWithRoles();
+
+            foreach (var user in users)
+            {
+                Console.Write(user.Name);
+                foreach (var role in user.Roles)
                     Console.WriteLine($" - {role.Name}");
             }
         }
@@ -48,12 +58,12 @@ namespace DapperProjectBlog
             var user = new User()
             {
                 // O id já é gerado;
-                Bio = "Desenvolvedor Backend Junior",
-                Email = "caio@email.com",
+                Bio = "Estudante",
+                Email = "igor@email.com",
                 Image = "https://",
-                Name = "Caio",
-                PasswordHash = "9191",
-                Slug = "agmcaio"
+                Name = "Igor Guilherme",
+                PasswordHash = "123",
+                Slug = "agmigor"
             };
 
             var repository = new Repository<User>(connection);
@@ -136,6 +146,7 @@ namespace DapperProjectBlog
             repository.Delete(id);
             Console.WriteLine("Cadastro Removido!");
         }
+        */
     }
 
 }
