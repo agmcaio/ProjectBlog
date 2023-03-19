@@ -1,25 +1,18 @@
-﻿using DapperProjectBlog.Screens.UserScreen;
-using DapperProjectBlog.Screens.UserScreens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DapperProjectBlog.Screens.TagScreens;
 
-namespace DapperProjectBlog.Screens.PostScreens
+namespace DapperProjectBlog.Screens.CategoryScreens
 {
-    public static class MenuPostScreen
+    public static class MenuCategoryScreen
     {
         public static void Load()
         {
             Console.Clear();
-            Console.WriteLine("Post Management");
+            Console.WriteLine("Category Management");
             Console.WriteLine();
-            Console.WriteLine("1 - Register post");
-            Console.WriteLine("2 - Update post");
-            Console.WriteLine("3 - list especif post");
-            Console.WriteLine("4 - List all posts");
-            Console.WriteLine("5 - Delete post");
+            Console.WriteLine("1 - Register category");
+            Console.WriteLine("2 - Update category");
+            Console.WriteLine("3 - List all category");
+            Console.WriteLine("4 - Delete post");
             Console.WriteLine("0 - Back");
             Console.WriteLine();
             var option = short.Parse(Console.ReadLine());
@@ -27,16 +20,13 @@ namespace DapperProjectBlog.Screens.PostScreens
             switch (option)
             {
                 case 1:
-                    CreatePostScreen.Load();
+                    CreateTagScreen.Load();
                     break;
                 case 2:
                     break;
                 case 3:
                     break;
                 case 4:
-                    //ListPostScreen.Load();
-                    break;
-                case 5:
                     break;
                 case 0:
                     break;
